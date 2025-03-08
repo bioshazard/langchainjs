@@ -110,9 +110,9 @@ export class Bedrock extends LLM implements BaseBedrockInput {
     this.model = fields?.model ?? this.model;
     this.modelProvider = getModelProvider(this.model);
 
-    if (!ALLOWED_MODEL_PROVIDERS.includes(this.modelProvider)) {
+    if (!ALLOWED_MODEL_PROVIDERS.includes(this.modelProvider) && !this.model.startsWith("arn:aws")) {
       throw new Error(
-        `Unknown model provider: '${this.modelProvider}', only these are supported: ${ALLOWED_MODEL_PROVIDERS}`
+        `Unknown model provider: '${this.modelProvider}', only Application Inference profiles or these providers are supported: ${ALLOWED_MODEL_PROVIDERS}`
       );
     }
     const region =
